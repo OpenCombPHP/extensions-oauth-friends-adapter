@@ -49,15 +49,17 @@ class CreateFriendAspect
 		    
 		    $oAuserClone->load($aId->userId(),'uid') ;
 
-		    
+		    $sNoBindWeibo = array();
 		    foreach($aModel->childIterator() as $o)
 		    {
+		        $sNoBindWeibo[$o->service] = $o->service;
 		        try{
 		            $aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($o->service) ;
 		            foreach($oAuserClone->childIterator() as $o2){
 		                if($o2->service == $o->service)
 		                {
 		                    $aRs = @$aAdapter->createFriendMulti($o2,$o->suid);
+		                    unset($sNoBindWeibo[$o->service]);
 		                }
 		            }
 		            
@@ -71,7 +73,11 @@ class CreateFriendAspect
 		    
 		    $OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 		    $aRsT = $OAuthCommon -> multi_exec();
+		    
 		    echo "<pre>";print_r($aRsT);echo "</pre>";
+		    echo "<pre>";print_r($sNoBindWeibo);echo "</pre>";
+		    //echo "<pre>";print_r(implode(",", $sNoBindWeibo));echo "</pre>";
+		    //echo '<script>alert("'.implode(",", $sNoBindWeibo).'")</script>';
 		}
 	}
 }
