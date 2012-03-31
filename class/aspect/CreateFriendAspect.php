@@ -74,7 +74,10 @@ class CreateFriendAspect
 		    $aRsT = $OAuthCommon -> multi_exec();
 		    
 		    $name = $aModel->child(0)->nickname?$aModel->child(0)->nickname:$aModel->child(0)->username;
-		    echo "您已经在 ".implode('、', $sNoBindWeibo)." 对 ".$name." 进行了同步关注。 ";
+		    if(!empty($sNoBindWeibo))
+		    {
+		        echo "您已经在 ".implode('、', $sNoBindWeibo)." 对 ".$name." 进行了同步关注。 ";
+		    }
 		    exit;
 		    //echo "<pre>";print_r($aRsT);echo "</pre>";
 		    //echo "<pre>";print_r($sNoBindWeibo);echo "</pre>";
