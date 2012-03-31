@@ -48,13 +48,13 @@ class CreateFriendAspect
 		    $aModel->load($this->params['uid'],'uid') ;
 		    
 		    $oAuserClone->load($aId->userId(),'uid') ;
-
+		    
 		    $sNoBindWeibo = array();
 		    foreach($aModel->childIterator() as $o)
 		    {
 		        try{
 		            $aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($o->service) ;
-		            foreach($oAuserClone->childIterator() as $o2){
+		            foreach($oAuserClone as $o2){
 		                if($o2->service == $o->service)
 		                {
 		                    $aRs = @$aAdapter->createFriendMulti($o2,$o->suid);
@@ -73,9 +73,9 @@ class CreateFriendAspect
 		    $OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 		    $aRsT = $OAuthCommon -> multi_exec();
 		    
-		    $name = $aModel->child(0)->nickname?$aModel->child(0)->nickname:$aModel->child(0)->username;
 		    if(!empty($sNoBindWeibo))
 		    {
+		        $name = $aModel->child(0)->nickname?$aModel->child(0)->nickname:$aModel->child(0)->username;
 		        echo "您已经在 ".implode('、', $sNoBindWeibo)." 对 ".$name." 进行了同步关注。 ";
 		    }
 		    exit;
