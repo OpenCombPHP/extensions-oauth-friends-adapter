@@ -52,14 +52,13 @@ class CreateFriendAspect
 		    $sNoBindWeibo = array();
 		    foreach($aModel->childIterator() as $o)
 		    {
-		        $sNoBindWeibo[$o->service] = $o->service;
 		        try{
 		            $aAdapter = \org\opencomb\oauth\adapter\AdapterManager::singleton()->createApiAdapter($o->service) ;
 		            foreach($oAuserClone->childIterator() as $o2){
 		                if($o2->service == $o->service)
 		                {
 		                    $aRs = @$aAdapter->createFriendMulti($o2,$o->suid);
-		                    unset($sNoBindWeibo[$o->service]);
+		                    $sNoBindWeibo[] = \org\opencomb\oauth\adapter\AdapterManager::singleton()->serviceTitle($o->service);
 		                }
 		            }
 		            
@@ -74,8 +73,11 @@ class CreateFriendAspect
 		    $OAuthCommon = new \net\daichen\oauth\OAuthCommon("",  "");
 		    $aRsT = $OAuthCommon -> multi_exec();
 		    
-		    echo "<pre>";print_r($aRsT);echo "</pre>";
-		    echo "<pre>";print_r($sNoBindWeibo);echo "</pre>";
+		    $name = $aModel->child(0)->nickname?$aModel->child(0)->nickname:$aModel->child(0)->username;
+		    echo "您已经在 ".implode('、', $sNoBindWeibo)." 对 ".$name." 进行了同步关注。 ";
+		    exit;
+		    //echo "<pre>";print_r($aRsT);echo "</pre>";
+		    //echo "<pre>";print_r($sNoBindWeibo);echo "</pre>";
 		    //echo "<pre>";print_r(implode(",", $sNoBindWeibo));echo "</pre>";
 		    //echo '<script>alert("'.implode(",", $sNoBindWeibo).'")</script>';
 		}
