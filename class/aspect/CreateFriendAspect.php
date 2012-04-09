@@ -11,16 +11,6 @@ use org\jecat\framework\lang\aop\jointpoint\JointPointMethodDefine;
 class CreateFriendAspect
 {
 	/**
-	 * @pointcut
-	 */
-	public function pointcutCreateFriendAspect()
-	{
-		return array(
-			new JointPointMethodDefine('org\\opencomb\\friends\\CreateFriend','process') ,
-		) ;
-	}
-	
-	/**
 	 * @advice around
 	 * @for pointcutCreateFriendAspect
 	 */

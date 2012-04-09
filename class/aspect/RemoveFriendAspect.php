@@ -17,16 +17,6 @@ use org\jecat\framework\lang\aop\jointpoint\JointPointMethodDefine;
 class RemoveFriendAspect
 {
 	/**
-	 * @pointcut
-	 */
-	public function pointcutRemoveFriendAspect()
-	{
-		return array(
-			new JointPointMethodDefine('org\\opencomb\\friends\\RemoveFriend','process') ,
-		) ;
-	}
-	
-	/**
 	 * @advice around
 	 * @for pointcutRemoveFriendAspect
 	 */
